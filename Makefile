@@ -1,5 +1,13 @@
+CC       = gcc
+CFLAGS   = -O2 -g -Wall -fmessage-length=0
+OBJS     = list.o main.o
+TARGET   = application
 
-list: list.c
-	gcc list.c -o list
+all: $(TARGET)
 
-all: list
+$(TARGET): $(OBJS)
+	$(CC) $(CFLAGS) -o $(TARGET) $(OBJS)
+
+clean:
+	rm -f $(OBJS) $(TARGET)
+
