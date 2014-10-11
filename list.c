@@ -54,6 +54,31 @@ void add_value(struct List *list, int value)
    list->size++;
 }
 
+void remove_value(struct List *list, int value)
+{
+   struct Node *current = list->first;
+   struct Node *previous = NULL;
+
+   while (current != NULL)
+   {
+      if (current->value == value)
+      {
+         if (previous == NULL) 
+         {
+            list->first = current->next;
+         }
+         else
+         {
+            previous->next = current->next;
+         }
+         free(current);
+         break;
+      }
+      previous = current;
+      current = current->next;
+   }
+}
+
 void print_list(struct List *list)
 {
    printf("values in the list(%d):\n", list->size);
@@ -64,3 +89,4 @@ void print_list(struct List *list)
       current = current->next;
    }
 }
+

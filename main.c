@@ -7,6 +7,8 @@ int main()
    add_value(list, 2);
    add_value(list, 3);
 
+   remove_value(list, 2);
+
    print_list(list);
    free(list);
 
