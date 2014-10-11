@@ -10,31 +10,70 @@ struct Node
 struct List
 {
    struct Node *first;
+   int size;
 };
 
-int main() 
+struct List *create_list()
 {
-   struct List *mylist = malloc(sizeof(struct List));
-   struct Node *node1 = malloc(sizeof(struct Node));
-   struct Node *node2 = malloc(sizeof(struct Node));
-   struct Node *node3 = malloc(sizeof(struct Node));
+   struct List *list = malloc(sizeof(struct List));
+   list->first = NULL;
+   list->size = 0;
+   return list;
+}
 
-   mylist->first = node1;
-   node1->value = 1;
-   node1->next = node2;
-   node2->value = 2;
-   node2->next = node3;
-   node3->value = 3;
-   node3->next = NULL;
+struct Node *create_node(int value)
+{
+   struct Node *node = malloc(sizeof(struct Node));
+   node->value = value;
+   node->next = NULL;
+   return node;
+}
 
-   printf("values in the list:\n");
-   struct Node *current = mylist->first;
+void add_node_to_end_of_list(struct List *list, struct Node *node)
+{
+   if (list->first == NULL)
+   {
+      list->first = node;
+   }
+   else
+   {
+      struct Node *current = list->first;
+      while (current->next != NULL)
+      {
+         current = current->next;
+      }
+      current->next = node;
+   }
+}
+
+void add_value(struct List *list, int value)
+{
+   struct Node *node = create_node(value);
+   add_node_to_end_of_list(list, node);
+
+   list->size++;
+}
+
+void print_list(struct List *list)
+{
+   printf("values in the list(%d):\n", list->size);
+   struct Node *current = list->first;
    while (current != NULL)
    {
       printf("  %d \n", current->value);
       current = current->next;
    }
+}
 
-   free(mylist);
+int main() 
+{
+   struct List *list = create_list();
+   add_value(list, 1);
+   add_value(list, 2);
+   add_value(list, 3);
+
+   print_list(list);
+   free(list);
+
    return 0;
 }
