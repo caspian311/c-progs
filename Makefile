@@ -1,13 +1,11 @@
-all: prog
+CC = gcc
+TARGET = prog
+OBJS = prog.o fizzbuzz.o
 
-fizzbuzz.o: fizzbuzz.c
-	gcc -c fizzbuzz.c
+all: $(TARGET)
 
-prog.o: prog.c
-	gcc -c prog.c
-
-prog: prog.o fizzbuzz.o
-	gcc prog.o fizzbuzz.o -o prog
+$(TARGET): $(OBJS)
+	$(CC) -o $(TARGET) $(OBJS)
 
 clean:
-	rm -f *.o prog
+	rm -f $(OBJS) $(TARGET)
