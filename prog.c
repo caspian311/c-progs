@@ -1,30 +1,37 @@
 #include "stdio.h"
 #include "fizzbuzz.h"
 
-int main() 
+void fizzbuzzify(char *str, int i)
 {
-   printf("The fizz buzz list:\n");
-
-   for (int i=1; i<=20; i++) 
-   {
       if (is_fizzbuzz(i)) {
-            printf("fizzbuzz\n");
+            sprintf(str, "fizzbuzz");
       }
       else
       {
          if (is_fizz(i))
          {
-            printf("fizz\n");
+            sprintf(str, "fizz");
          }
          else if (is_buzz(i))
          {
-            printf("buzz\n");
+            sprintf(str, "buzz");
          }
          else
          {
-            printf("%d\n", i);
+            sprintf(str, "%d", i);
          }
       }
+}
+
+int main()
+{
+   printf("The fizz buzz list:\n");
+
+   for (int i=1; i<=20; i++) 
+   {
+      char str[9];
+      fizzbuzzify(str, i);
+      printf("%s\n", str);
    }
 
    return 0;
