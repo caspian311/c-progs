@@ -3,6 +3,7 @@
 #include <string.h>
 #include <ctype.h>
 #include <stdbool.h>
+#include <time.h>
 
 void remove_newline_from_input(char *guess)
 {
@@ -34,6 +35,7 @@ bool is_integer(char *str)
 
 int get_guess_from_user()
 {
+   printf("guess a number: ");
    char guess[3];
    fgets(guess, 3, stdin);
 
@@ -48,20 +50,60 @@ int get_guess_from_user()
    }
 }
 
+int random_number_between(int min, int max)
+{
+   time_t current_time = time(NULL);
+   srand(current_time);
+   int random_number = rand();
+   return random_number % (max - min + 1) + min;
+}
+
+int choose_random_number()
+{
+   return random_number_between(1, 10);
+}
+
+bool validateGuess(int guess)
+{
+      if (guess != -1)
+      {
+         return true;
+      }
+      else
+      {
+         printf("That's not a real number.\n");
+         return false;
+      }
+}
+
+bool checkWinningConditions(int guess, int target)
+{
+   printf("you guessed: %d\n", guess);
+   if (guess == target) {
+      printf("you guessed correctly\n");
+      return true;
+   } 
+   else
+   {
+      printf("not quite, try again\n");
+      return false;
+   }
+}
 
 int main() 
 {
-   printf("guess a number: ");
+   int target = choose_random_number();
+   bool userGuessedTarget = false;
+   while(!userGuessedTarget) 
+   {
+      int guess = get_guess_from_user();
+      if (validateGuess(guess))
+      {
+         userGuessedTarget = checkWinningConditions(guess, target);
+      }
+   }
 
-   int guess = get_guess_from_user();
-   if (guess != -1)
-   {
-      printf("you guessed: %d\n", guess);
-   }
-   else
-   {
-      printf("That's not a real number.\n");
-   }
+   printf("Thanks for playing!\n");
 
    return 0;
 }
